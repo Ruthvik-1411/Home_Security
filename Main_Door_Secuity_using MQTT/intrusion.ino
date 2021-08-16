@@ -9,8 +9,8 @@ char* door_stat="";                                   //To store status of door 
 char* home_stat="Secure";                             //To store status of house, Secure or possible intrusion and to publish on server side
 
 String astat="Arm";                                   //Alarm status whether the alarm is armed or disarmed
-const char* ssid="Sugreev";                           //To store wifi name(ssid)
-const char* password="13PAVANSUGREEV2004";            //To store wifi password
+const char* ssid="xxxxxxx";                           //To store wifi name(ssid)
+const char* password="xxxxxx";            //To store wifi password
 const char* mqtt_server="broker.mqtt-dashboard.com";  //To store the mqtt server address broker.mqtt-dashboard.com is a free one
 long lastMsg=0;                                       //To store the time last message was recieved from the mqtt server
 char detail[50],h_stat[50];                           //Character arrays to store data to be sent to the server
@@ -131,7 +131,7 @@ void getirval(){
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection....");
-    if (client.connect("51b8f9ab-8a3e-4543-881a-4658c9fb1ea4")) {
+    if (client.connect("xxxxxxxxxx")) { //Any random name like esp8266client or a client id
       Serial.println("Successfully Connected");
       client.subscribe("SECURITY_STATUS");
     }
