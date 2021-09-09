@@ -1,5 +1,5 @@
 # Home Intrusion Alert System
-The aim of this project is to design an intruder alert system that notifies the user in case of a break in via mail. The concept can be applied to a get a phone call or message which most of the people respond to quickly. If the alarm is armed and if the door is opened then a buzzer starts making noise and the user gets a mail saying that there is a break in and the alarm is triggered.<br><br>
+The aim of this project is to design an intruder alert system that notifies the user in case of a break in via mail. The concept can be applied to a get a phone call or a message as most of the people respond to them quickly. If the alarm is armed and if the door is opened then a buzzer starts making noise and the user gets a mail saying that there is a break in and the alarm is triggered.<br><br>
 <b>Components Required</b>
 <li>
 
