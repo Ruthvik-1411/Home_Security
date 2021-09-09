@@ -1,0 +1,108 @@
+<!--- Webpage code to change alarm status and get the status from thingspeak channel--->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content=" width=device-width, initial-scale=1.0"/>
+	<meta name="Home_Security" content="Ruth's Alarm Monitor">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<title>Ruth's Alarm Monitor</title>
+</head>
+<body style="background: url('https://github.com/Ruthvik-1411/utility_01/blob/main/cyber-security-3374252_1920.jpg?raw=true')  no-repeat center fixed;
+             background-size: cover;overflow: hidden; height: 100%;">
+	<div style="background-color: #000000; position: fixed; padding-top: 5px; margin: 10px; margin-top: 30px; margin-left: 19%; margin-right: 19%;
+              height:72% ; width: 63%; opacity: 0.45;z-index: 2;border-radius: 10px; "></div><br>
+	<div align="center" style="font-family: Helvetica; color: white; position: relative; ; text-align: center; z-index: 3;margin-top: 40px;margin-left: 20%; margin-right: 20%;">
+	<center>
+		<h1>Door Lock <br> (Global Monitor)</h1>
+		<h2>
+			<span id="Status">Default</span>
+			<span>|</span>
+			<span id="Sec">Default</span>
+		</h2>
+
+	</center>
+	<div align="center" class="form" style="font-family: Helvetica;">
+       <form action="" method="get">
+			  <input type="text" id="ipw" placeholder="Thingspeak Write API Key"></form></input><br>
+			  <input type="text" id="ch" placeholder="Thingspeak Channel Number"></form></input><br><br>
+			  <input type="text" id="ipr" placeholder="Thingspeak Read API Key"></form></input><br><br>
+              <button type="button"  id="on" onclick="Tx1()">ARM</button>
+			  <button type="button" id="off" onclick="Tx0()" >DISARM</button><br><br>
+			  <button type="button" id="getstat" onclick="Rx()">Get Status</button>
+        </form>
+	 </div>
+	 <h4>
+	 	<span>Last Transmission: </span>
+	 	<span id="!tx">Nill</span>
+	 </h2>
+	</div>
+</body>
+<script type="text/javascript">
+	httpRequest=new XMLHttpRequest();
+	function Tx1() {
+		stat="Arm";
+		ip=document.getElementById("ipw").value;
+		url = "https://api.thingspeak.com/update?api_key="+ ip + "&field2=1";
+		httpRequest.open("GET", url);
+		httpRequest.send();
+		document.getElementById("!tx").innerHTML=stat;
+	}
+	function Tx0() {
+		stat="Disarm";
+		ip=document.getElementById("ipw").value;
+		url = "https://api.thingspeak.com/update?api_key="+ ip + "&field2=0";
+		httpRequest.open("GET", url);
+		httpRequest.send();
+		document.getElementById("!tx").innerHTML=stat;
+	}
+	function Rx(){
+		ch=document.getElementById("ch").value;
+		ip=document.getElementById("ipr").value;
+		url_a="https://api.thingspeak.com/channels/"+ ch +"/fields/2/last.json?api_key="+ ip +"&results=1";
+		url_sec="https://api.thingspeak.com/channels/"+ ch +"/fields/1/last.json?api_key="+ ip +"&results=1";
+
+		httpRequest.open("GET", url_a);
+		httpRequest.send();
+		$.getJSON(url_a, function(data) {
+					if(data.field2=="1"){
+						document.getElementById("Status").innerHTML="Armed";
+					}
+					else if(data.field2=="0"){
+						document.getElementById("Status").innerHTML="Disarmed";
+					}
+					else{
+						document.getElementById("Status").innerHTML="No Entry";
+					}
+				});
+
+		httpRequest.open("GET", url_sec);
+		httpRequest.send();
+		$.getJSON(url_sec, function(data) {
+					if(data.field1=="404"){
+						document.getElementById("Sec").innerHTML="Possible Intrusion";
+					}
+					else if(data.field1=="200"){
+						document.getElementById("Sec").innerHTML="Secure";
+					}
+					else{
+						document.getElementById("Sec").innerHTML="No Entry";
+					}
+				});
+	}
+</script>
+</html>
+
+<!--- comments
+return data in json format from thingspeak api used to read and write data in the fields.
+
+for reading data from all fields, the json data returned is 
+{"channel":{"id":xxxxxx,"name":"Intrusion_alert_sys","description":"home_dashboard","latitude":"0.0","longitude":"0.0","field1":"Field Label 1","field2":"Field Label 2",
+"created_at":"2021-09-05T07:48:16Z","updated_at":"2021-09-05T07:48:16Z","last_entry_id":30},
+"feeds":[{"created_at":"2021-09-06T16:55:19Z","entry_id":30,"field1":null,"field2":"1"}]}
+
+for reading the last entry in field 1, the json data returned is 
+{"created_at":"2021-09-06T17:55:59Z","entry_id":43,"field1":"200"}
+
+		--->
