@@ -18,5 +18,5 @@ The idea of this project is to monitor the status of the main door or any door o
   First the mcu reads if the alarm is armed or disarmed and then reads if the door is opened or closed. Based on this a decision is made to start an alarm or remain calm. We send and recieve the data from the MQTT server. We use the mqtt broker dashboard to act as a channel to use the data. It is secure and easy to use. The Publish and Subscribe facilities 
   allow us to send and recieve data from multiple channels. The code explains how the mcu reads the data and uses it to make the decision.<br><br>
   The status of the door is sent to the mqtt server and this data can be seen in the mqtt dash app. You can see how it works in the implementation video below.
-  <br>Implementaion Video : <a href="https://drive.google.com/file/d/1rXKODvqkw3WIfDLNOFRC8cANSENAxm1l/view?usp=sharing">Video Link</a><br>
+  <br>YouTube Demo Link: https://youtu.be/AV7aJAmg_wI <br>
   The code and mqtt dash app's screenshots can be found above
